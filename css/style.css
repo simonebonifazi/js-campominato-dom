@@ -11,14 +11,6 @@
     margin: 0 auto;
 }
 
-.d-block {
-    display: block;
-}
-
-.d-none {
-    display: none;
-}
-
 /* header */
 header {
     height: 140px;
@@ -45,9 +37,6 @@ header>div {
 /* end header */
 
 /* start main */
-body {
-    background-color: #23b312;
-}
 
 .cell {
     border: 2px solid #fff;
