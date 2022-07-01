@@ -35,27 +35,45 @@ function createCell(cellNumber) {
     cell.innerText = cellNumber;
     return cell;
 }
-//milestone 2/ creo funzione random number e verifico funzioni
-function createRandomNumber(min, max) {
+//milestone 2/ creo funzione random number e verifico funzioni /convertita in arrow f per allenamento
+const createRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max + 1 - min)) + min;
 }
-console.log(createRandomNumber(1, 16))
+
+//console.log(createRandomNumber(1, 100))
 
 /* steps_milestone 1
 1. preparo una variabile let vuota per contenere il punteggio dell'utente
 2. al click sulla cella / nell'ultimo eventlistener/ aumenta ogni volta il numero del contatore
-questions: devo avere un limite massimo ai click dell'utente?  
 */
 
+/*steps milestone3_
+0.creiamo un array che segnalerà le posizioni delle bombe
+1. riempiamo l'array con 16 numeri casuali compresi tra l'1 e il 100 CHE NON SI RIPETANO
+2. verifico che il numero selezionato dall'utente coincida con i numeri dell'array
+dovrò usare un parseint per convertire i dati che mi arrivano all'array
+3. se coincidono i numeri di cui al punto 2, cella rossa + alert / else, normale 
+
+*/
 //dichiaro variabili globali
 const gameStarter = document.getElementById('game-starter');
 const gameArea = document.getElementById('perimeter');
 
 //contatore click / punteggio
 let clickCount = 0;
+// array di bombe
+let bombs = [];
+//variabile contenitore singolo numero
+let randomNumber;
+//inserisco 16 numeri casuali nell'array bombs e mi assicuro che non si ripetano
 
-
-
+for (i = 0; i < 16; i++) {
+    do {
+        randomNumber = createRandomNumber(1, 100)
+    } while (bombs.includes(randomNumber))
+    bombs.push(randomNumber)
+    console.log(bombs)
+}
 //preparo la mia griglia
 let rows = 10;
 //poichè la mia griglia sarà sempre quadrata
@@ -87,7 +105,6 @@ gameStarter.addEventListener('click', function () {
             console.log('hai cliccato la cella numero: ' + i);
             //aggiungo la classe alla cella
             cellElement.classList.add('clicked');
-
         })
 
         //stampo gliglie nel loro contenitore
@@ -98,7 +115,9 @@ gameStarter.addEventListener('click', function () {
 // In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati (delle bombe) - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina. Altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
 // La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
 // Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
-// # MILESTONE 2
-// Facciamo in modo di generare 16 numeri casuali(tutti diversi) compresi tra 1 e il massimo di caselle disponibili.
-Generiamoli e stampiamo in console per essere certi che siano corretti
+# MILESTONE 3
+Quando l'utente clicca su una cella, verifichiamo se ha calpestato una bomba,
+controllando se il numero di cella è presente nell'array di bombe. 
+Se si, la cella diventa rossa
+(raccogliamo il punteggio e e scriviamo in console che la partita termina) altrimenti diventa azzurra e dobbiamo incrementare il punteggio.
 */
