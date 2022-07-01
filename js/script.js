@@ -53,6 +53,7 @@ const createRandomNumber = (min, max) => {
 2. verifico che il numero selezionato dall'utente coincida con i numeri dell'array
 dovrò usare un parseint per convertire i dati che mi arrivano all'array
 3. se coincidono i numeri di cui al punto 2, cella rossa + alert / else, normale 
+3.1
 
 */
 //dichiaro variabili globali
@@ -65,15 +66,6 @@ let clickCount = 0;
 let bombs = [];
 //variabile contenitore singolo numero
 let randomNumber;
-//inserisco 16 numeri casuali nell'array bombs e mi assicuro che non si ripetano
-
-for (i = 0; i < 16; i++) {
-    do {
-        randomNumber = createRandomNumber(1, 100)
-    } while (bombs.includes(randomNumber))
-    bombs.push(randomNumber)
-    console.log(bombs)
-}
 //preparo la mia griglia
 let rows = 10;
 //poichè la mia griglia sarà sempre quadrata
@@ -85,6 +77,18 @@ gameStarter.addEventListener('click', function () {
     //cambio la scritta al bottone 
     gameStarter.innerText = 'Ricomincia...'
 
+    //svuoto bombs
+    let bombs = [];
+
+    //inserisco 16 numeri casuali nell'array bombs e mi assicuro che non si ripetano
+
+    for (i = 0; i < 16; i++) {
+        do {
+            randomNumber = createRandomNumber(1, 100)
+        } while (bombs.includes(randomNumber))
+        bombs.push(randomNumber)
+        console.log(bombs)
+    }
 
     for (let i = 1; i <= totalRowsCols; i++) {
 
@@ -105,19 +109,20 @@ gameStarter.addEventListener('click', function () {
             console.log('hai cliccato la cella numero: ' + i);
             //aggiungo la classe alla cella
             cellElement.classList.add('clicked');
+            //se il numero del ciclo è uguale al numero delle bombe, allora diventa rossa la cella
+            if (bombs.includes(i)) {
+                cellElement.classList.add('red');
+                console.log(`URlooser. your score is  ${clickCount}`);
+                alert(`URlooser. your score is  ${clickCount}`)
+                //dovrei fermaare il conteggio dei punti?
+            }
         })
 
         //stampo gliglie nel loro contenitore
         gameArea.appendChild(cellElement);
     }
 })
-/* Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. Attenzione: nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
+// Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. Attenzione: nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
 // In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati (delle bombe) - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina. Altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
 // La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
 // Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
-# MILESTONE 3
-Quando l'utente clicca su una cella, verifichiamo se ha calpestato una bomba,
-controllando se il numero di cella è presente nell'array di bombe. 
-Se si, la cella diventa rossa
-(raccogliamo il punteggio e e scriviamo in console che la partita termina) altrimenti diventa azzurra e dobbiamo incrementare il punteggio.
-*/

@@ -54,6 +54,10 @@ header>div {
     cursor: not-allowed;
 }
 
+.cell.red {
+    background-color: #f00;
+}
+
 /* scelgo le dimensioni del perimetro tenendo presente dell'eventualità di dover affrontare il bonus, per cui divisibile per 7,9,10 */
 .perimeter-game {
     height: 630px;
