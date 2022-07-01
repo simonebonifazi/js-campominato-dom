@@ -27,14 +27,19 @@ Quando l'utente clicca su una cella, e questa non è una bomba, dobbiamo control
 Quando la partita termina dobbiamo capire se è terminata perchè è stata cliccata una bomba o se perchè l'utente ha raggiunto il punteggio massimo. Dobbiamo poi stampare in pagina il punteggio raggiunto ed il messaggio adeguato in caso di vittoria o sconfitta.
 
 */
-/* *********************************************
-creo la funzione per creare celle */
+// *********************************************
+// creo la funzione per creare celle 
 function createCell(cellNumber) {
     const cell = document.createElement('div');
     cell.className = 'cell';
     cell.innerText = cellNumber;
     return cell;
 }
+//milestone 2/ creo funzione random number e verifico funzioni
+function createRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max + 1 - min)) + min;
+}
+console.log(createRandomNumber(1, 16))
 
 /* steps_milestone 1
 1. preparo una variabile let vuota per contenere il punteggio dell'utente
@@ -48,6 +53,8 @@ const gameArea = document.getElementById('perimeter');
 
 //contatore click / punteggio
 let clickCount = 0;
+
+
 
 //preparo la mia griglia
 let rows = 10;
