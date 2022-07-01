@@ -36,45 +36,55 @@ function createCell(cellNumber) {
     return cell;
 }
 
+/* steps_milestone 1
+1. preparo una variabile let vuota per contenere il punteggio dell'utente
+2. al click sulla cella / nell'ultimo eventlistener/ aumenta ogni volta il numero del contatore
+questions: devo avere un limite massimo ai click dell'utente?  
+*/
 
-
-// milestone 2. 0.
+//dichiaro variabili globali
 const gameStarter = document.getElementById('game-starter');
 const gameArea = document.getElementById('perimeter');
+//per contare i click/punteggio
+let clickCount = 0;
 
-//1. 
-//2.bis rinomino e creo delle costanti in funzione della traccia del bonus:
+//preparo la mia griglia
 let rows = 10;
 //poichè la mia griglia sarà sempre quadrata
 let cols = rows;
 let totalRowsCols = rows * cols;
 gameStarter.addEventListener('click', function () {
-    //2.
-    //per non fargli stampare tutte le celle di volta in volta
+
     gameArea.innerHTML = '';
     gameStarter.innerText = 'Ricomincia...'
 
+
     for (let i = 1; i <= totalRowsCols; i++) {
 
-        //milestone 3. 
         const cellElement = createCell(i);
 
 
-        //milestone 4.
         cellElement.addEventListener('click', function () {
-            //
-            if (cellElement.classList.contains('clicked')) {
-                return;
-            }
 
+            if (cellElement.classList.contains('clicked')) return;
 
-            console.log(i);
+            //incremento  al click e verifico
+            clickCount++
+            console.log('il tuo punteggio è di: ' + clickCount)
+
+            //stampo in console il numero della cella
+            console.log('hai cliccato la cella numero: ' + i);
+            //aggiungo la classe alla cella
             cellElement.classList.add('clicked');
+
         })
+        //contatore click 
+
 
         gameArea.appendChild(cellElement);
     }
 })
-
-    // #MILESTONE 4
-    // Al click sulla cella, stampiamo il numero della cella cliccata in console, poi coloriamo la cella d'azzurro!
+// Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. Attenzione: nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
+// In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati (delle bombe) - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina. Altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
+// La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
+// Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.

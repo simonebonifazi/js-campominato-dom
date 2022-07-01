@@ -11,6 +11,12 @@
     margin: 0 auto;
 }
 
+/*main*/
+main {
+    background-color: #23b312;
+    padding: 15px 0;
+}
+
 /* header */
 header {
     height: 140px;
