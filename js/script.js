@@ -40,25 +40,7 @@ const createRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max + 1 - min)) + min;
 }
 
-/* steps_milestone 1
-1. preparo una variabile let vuota per contenere il punteggio dell'utente
-2. al click sulla cella / nell'ultimo eventlistener/ aumenta ogni volta il numero del contatore
-*/
-
-/*steps milestone3_
-0.creiamo un array che segnalerà le posizioni delle bombe
-1. riempiamo l'array con 16 numeri casuali compresi tra l'1 e il 100 CHE NON SI RIPETANO
-2. verifico che il numero selezionato dall'utente coincida con i numeri dell'array
-dovrò usare un parseint per convertire i dati che mi arrivano all'array
-3. se coincidono i numeri di cui al punto 2, cella rossa + alert / else, normale 
-3.1
-*/
-/*steps milestone__4
-0. per determinare come finisce la partita dobbiamo tenere presente che se clicca 
-tutte le celle senza bombe ha vinto. 
-1. lo stabilisco come differenza tra total cells e bombs 
-2.tramite variabile booleana preposta al principio che assume valore false all'origine e diventa true alla fine al verificarsi della condizione
-3.dove lo metto?
+/* steps_milestone 5
 */
 //dichiaro variabili globali
 const gameStarter = document.getElementById('game-starter');
@@ -70,7 +52,7 @@ let clickCount = 0;
 let bombs = [];
 //variabile contenitore singolo numero
 let randomNumber;
-//preparo la mia griglia e poichè sarà sempre quadrata
+//preparo la mia griglia e poichè sarà sempre quadrata e cambierà in base ai livelli
 let cols = rows = 10;
 let totalRowsCols = rows * cols;
 gameStarter.addEventListener('click', function () {
@@ -115,13 +97,11 @@ gameStarter.addEventListener('click', function () {
             if (bombs.includes(i)) {
                 cellElement.classList.add('red');
                 console.log(`URlooser. your score is  ${clickCount}`);
-                // alert(`URlooser. your score is  ${clickCount}`)
+                alert(`URlooser. your score is  ${clickCount}`)
                 //dovrei fermaare il conteggio dei punti?
-                //non funzia :( if (cellElement.classList.contains('red')) return;
             }
-            //stabilisco principio di vincita; aggiungo una seconda condizione perchè al momento non sono riuscito a fermare il gioco in caso di 
-            //click su bomba, ma solo a far apparire l'alert 
-            if (clickCount === totalRowsCols - bombs.length && !cellElement.classList.includes('red')) {
+            //stabilisco principio di vincita
+            if (clickCount === totalRowsCols - bombs.length) {
 
                 console.log('congratulations! U WIN THE GAME')
                 alert('congratulations! U WIN THE GAME');
