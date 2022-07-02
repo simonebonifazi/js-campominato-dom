@@ -56,7 +56,7 @@ gameStarter.addEventListener('click', function () {
     //azzero e rielaboro la griglia al click
     gameArea.innerHTML = '';
     //cambio la scritta al bottone 
-    gameStarter.innerText = 'Ricomincia...'
+    gameStarter.innerText = 'Restart...'
 
     //preparo la mia griglia di default e poichè sarà sempre quadrata e cambierà in base ai livelli
     let cols = rows = 10;
@@ -108,7 +108,7 @@ gameStarter.addEventListener('click', function () {
             if (bombs.includes(i)) {
                 cellElement.classList.add('red');
                 console.log(`URlooser. your score is  ${clickCount - 1}`);
-                alert(`URlooser. your score is  ${clickCount - 1}`)
+                alert(`U loose. Your score is  ${clickCount - 1}. Try again`)
                 //fermo il punteggio dei punti disabilitando tramite booleana funzione che aggiunge class clicked 
                 isOver = true;
             }
