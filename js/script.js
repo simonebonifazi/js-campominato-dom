@@ -53,7 +53,21 @@ let bombs = [];
 //variabile contenitore singolo numero
 let randomNumber;
 //preparo la mia griglia e poichè sarà sempre quadrata e cambierà in base ai livelli
-let cols = rows = 10;
+let cols = rows;
+//bonus_ aggancio subito l'elemento del DOM
+const level = document.getElementById('levels-selector')
+//gestisco i differenti livelli ; manca la grafica
+switch (level) {
+    case 'hard':
+        cols = rows = 7;
+        break;
+    case 'normal':
+        cols = rows = 9;
+        break;
+    case 'ez':
+    default:
+        cols = rows = 10;
+}
 let totalRowsCols = rows * cols;
 gameStarter.addEventListener('click', function () {
     //azzero e rielaboro la griglia al click
