@@ -1,4 +1,7 @@
-
+// Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. Attenzione: nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
+// In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati (delle bombe) - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina. Altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
+// La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
+// Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
 // *********************************************
 // creo la funzione per creare celle 
 /**
@@ -12,7 +15,7 @@ const createCell = (cellNumber, colsPerRow) => {
     cell.className = 'cell';
     cell.innerText = cellNumber;
 
-    //calcolo misure cols
+    //calcolo misure cols per grafica switch
     const sideLenght = `calc(100% / ${colsPerRow})`;
     // aggiungo il calcolo tramite attributo styile in html
     cell.style.height = sideLenght;
@@ -58,11 +61,11 @@ gameStarter.addEventListener('click', function () {
     //cambio la scritta al bottone 
     gameStarter.innerText = 'Restart...'
 
-    //preparo la mia griglia di default e poichè sarà sempre quadrata e cambierà in base ai livelli
+    //preparo la mia griglia di default e poichè sarà sempre quadrata
     let cols = rows = 10;
     //bonus_ aggancio subito l'elemento del DOM rispetto al value della select
     const level = document.getElementById('levels-selector').value
-    //gestisco i differenti livelli ; manca la grafica
+    //gestisco i differenti livelli 
     switch (level) {
         case 'normal':
             cols = rows = 9;
@@ -104,19 +107,25 @@ gameStarter.addEventListener('click', function () {
             console.log('hai cliccato la cella numero: ' + i);
             //aggiungo la classe alla cella
             cellElement.classList.add('clicked');
+            //metto un fiore se non prende la bomba
+            this.innerHTML = `<i class="fa-solid fa-fan"></i>`;
+
             //se il numero del ciclo è uguale al numero delle bombe, allora diventa rossa la cella
             if (bombs.includes(i)) {
                 cellElement.classList.add('red');
                 console.log(`URlooser. your score is  ${clickCount - 1}`);
-                alert(`U loose. Your score is  ${clickCount - 1}. Try again`)
-                //fermo il punteggio dei punti disabilitando tramite booleana funzione che aggiunge class clicked 
+                alert(`U loose. Your score is  ${clickCount - 1}. Try again`);
+
+                //bomba al click della casella
+                this.innerHTML = `<i class="fa-solid fa-bomb"></i>`;
+                //fermo il conteggio dei punti disabilitando tramite booleana funzione che aggiunge class clicked 
                 isOver = true;
             }
             //stabilisco principio di vincita
             if (clickCount === totalRowsCols - bombs.length) {
 
-                console.log('congratulations! U WIN THE GAME')
-                alert('congratulations! U WIN THE GAME');
+                console.log('congratulations! U WIN')
+                alert('Congratulations! U WIN');
 
             }
         })
@@ -126,7 +135,3 @@ gameStarter.addEventListener('click', function () {
         gameArea.appendChild(cellElement);
     }
 })
-// Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. Attenzione: nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
-// In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati (delle bombe) - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina. Altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
-// La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
-// Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
