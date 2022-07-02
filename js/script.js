@@ -1,35 +1,13 @@
-/*
-Traccia:
-# BONUS
-Aggiungere una select accanto al bottone di generazione, che fornisca una scelta tra tre diversi livelli di difficoltà:
-- con difficoltà 1 => 100 caselle, con un numero compreso tra 1 e 100, divise in 10 caselle per 10 righe;
-- con difficoltà 2 => 81 caselle, con un numero compreso tra 1 e 81, divise in 9 caselle per 9 righe;
-- con difficoltà 3 => 49 caselle, con un numero compreso tra 1 e 49, divise in 7 caselle per 7 righe;
-*/
-/* traccia bis
-Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. Attenzione: nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
-In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati (delle bombe) - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina. Altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
-La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
-Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
-# MILESTONE 1
-Prepariamo "qualcosa" per tenere il punteggio dell'utente.
-Quando l'utente clicca su una cella, incrementiamo il punteggio.
-Se riusciamo, facciamo anche in modo da non poter più cliccare la stessa cella.
-# MILESTONE 2
-Facciamo in modo di generare 16 numeri casuali (tutti diversi) compresi tra 1 e il massimo di caselle disponibili.
-Generiamoli e stampiamo in console per essere certi che siano corretti
-# MILESTONE 3
-Quando l'utente clicca su una cella, verifichiamo se ha calpestato una bomba, controllando se il numero di cella è presente nell'array di bombe. Se si, la cella diventa rossa (raccogliamo il punteggio e e scriviamo in console che la partita termina) altrimenti diventa azzurra e dobbiamo incrementare il punteggio.
-# MILESTONE 4
-Quando l'utente clicca su una cella, e questa non è una bomba, dobbiamo controllare se il punteggio incrementato ha raggiunto il punteggio massimo perchè in quel caso la partita termina. Raccogliamo quindi il messaggio è scriviamo un messaggio appropriato.
-(Ma come stabiliamo quale sia il punteggio massimo?)
-# MILESTONE 5
-Quando la partita termina dobbiamo capire se è terminata perchè è stata cliccata una bomba o se perchè l'utente ha raggiunto il punteggio massimo. Dobbiamo poi stampare in pagina il punteggio raggiunto ed il messaggio adeguato in caso di vittoria o sconfitta.
 
-*/
 // *********************************************
 // creo la funzione per creare celle 
-function createCell(cellNumber, colsPerRow) {
+/**
+ * 
+ * @param {number} cellNumber indica il numero delle celle
+ * @param {number} colsPerRow indica il numero di colonne per riga
+ * @returns le celle della griglia
+ */
+const createCell = (cellNumber, colsPerRow) => {
     const cell = document.createElement('div');
     cell.className = 'cell';
     cell.innerText = cellNumber;
@@ -42,19 +20,31 @@ function createCell(cellNumber, colsPerRow) {
     return cell;
 }
 //milestone 2/ creo funzione random number e verifico funzioni /convertita in arrow f per allenamento
-const createRandomNumber = (min, max) => {
-    return Math.floor(Math.random() * (max + 1 - min)) + min;
+/**
+ * 
+ * @param {number} min bottom random number
+ * @param {number} max top random number
+ * @param {number} blacklist number that will not be repeated inside this f
+ * @returns random number in min, max range
+ */
+const createUniqueRandomNumber = (min, max, blacklist) => {
+    //variabile contenitore singolo numero
+    let randomNumber;
+    //almeno una volta pesca un numero
+    do {
+        //casuale e arrotondato tra min e max inclusi
+        randomNumber = Math.floor(Math.random() * (max + 1 - min)) + min;
+        //finchè è diverso dai numeri già generati
+    } while (blacklist.includes(randomNumber));
+
+    return randomNumber;
 }
 
-/* steps_milestone 5
-*/
 //dichiaro variabili globali
 const gameStarter = document.getElementById('game-starter');
 const gameArea = document.getElementById('perimeter');
 //variabile fine partita
 let isOver = false;
-//variabile contenitore singolo numero
-let randomNumber;
 //contatore click / punteggio
 let clickCount = 0;
 // array di bombe
@@ -88,10 +78,8 @@ gameStarter.addEventListener('click', function () {
     //inserisco 16 numeri casuali nell'array bombs e mi assicuro che non si ripetano
 
     for (i = 0; i < 16; i++) {
-        do {
-            randomNumber = createRandomNumber(1, totalRowsCols)
-        } while (bombs.includes(randomNumber))
-        bombs.push(randomNumber)
+        let bomb = createUniqueRandomNumber(1, totalRowsCols, bombs)
+        bombs.push(bomb)
         console.log(bombs)
     }
 
@@ -104,6 +92,7 @@ gameStarter.addEventListener('click', function () {
         cellElement.addEventListener('click', function () {
             //se hai perso, esci dalla funzione
             if (isOver) return;
+
             //massimo un click per cella
             if (cellElement.classList.contains('clicked')) return;
 

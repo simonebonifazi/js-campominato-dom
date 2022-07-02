@@ -70,7 +70,6 @@ header>div {
     flex-wrap: wrap;
 }
 
-
 .cell {
     width: calc(100% / 10);
     height: calc(100% / 10);
