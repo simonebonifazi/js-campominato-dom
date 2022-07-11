@@ -46,15 +46,29 @@ header>div {
 /* end header */
 
 /* start main */
-
 .cell {
+    width: calc(100% / 10);
+    height: calc(100% / 10);
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
     border: 2px solid #fff;
     color: #fff;
 }
 
 .cell.clicked {
-    background-color: #00f;
+
     cursor: not-allowed;
+}
+
+.cell.blu {
+    background-color: #00f;
+
 }
 
 .cell.red {
@@ -68,15 +82,4 @@ header>div {
 
     display: flex;
     flex-wrap: wrap;
-}
-
-.cell {
-    width: calc(100% / 10);
-    height: calc(100% / 10);
-
-    cursor: pointer;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }

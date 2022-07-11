@@ -43,6 +43,30 @@ const createUniqueRandomNumber = (min, max, blacklist) => {
     return randomNumber;
 }
 
+/**
+ * funzione per stabilire il game over 
+ * @param {number[]} bombs indica dietro quali numeri si cela una bomba
+ * 
+  */
+const gameOver = bombs => {
+
+    //prendo tutte le celle
+    const cells = document.querySelectorAll('.cell');
+    //giro nell'array
+    cells.forEach((cell) => {
+        //trasformo in numero il testo del markup della cella 
+        const cellNumber = parseInt(cell.innerText);
+        //attribuisco le classi a seconda dei casi
+        let className = bombs.includes(cellNumber) ? 'red' : 'blu'
+
+        //la aggiungo
+        cell.classList.add(className, 'clicked')
+        //aggiungo nelle celle i fiori o le bombe
+        let cellReveal = bombs.includes(cellNumber) ? `<i class="fa-solid fa-bomb"></i>` : `<i class="fa-solid fa-fan"></i>`;
+        cell.innerHTML = `${cellReveal}`
+    })
+
+}
 //dichiaro variabili globali
 const gameStarter = document.getElementById('game-starter');
 const gameArea = document.getElementById('perimeter');
@@ -86,6 +110,7 @@ gameStarter.addEventListener('click', function () {
         console.log(bombs)
     }
 
+
     for (let i = 1; i <= totalRowsCols; i++) {
 
         // creo cella tramite mia funzione 
@@ -99,14 +124,16 @@ gameStarter.addEventListener('click', function () {
             //massimo un click per cella
             if (cellElement.classList.contains('clicked')) return;
 
-            //incremento  al click e verifico
+            //incremento  al click 
             clickCount++
+            //verifico
             console.log('il tuo punteggio è di: ' + clickCount)
 
             //stampo in console il numero della cella
             console.log('hai cliccato la cella numero: ' + i);
+
             //aggiungo la classe alla cella
-            cellElement.classList.add('clicked');
+            cellElement.classList.add('blu');
             //metto un fiore se non prende la bomba
             this.innerHTML = `<i class="fa-solid fa-fan"></i>`;
 
@@ -114,24 +141,30 @@ gameStarter.addEventListener('click', function () {
             if (bombs.includes(i)) {
                 cellElement.classList.add('red');
                 console.log(`URlooser. your score is  ${clickCount - 1}`);
-                alert(`U loose. Your score is  ${clickCount - 1}. Try again`);
+                alert(`U loose. Your score is  ${clickCount - 1}. You can check the number makes you lose looking for the red flower. Try again`);
 
                 //bomba al click della casella
                 this.innerHTML = `<i class="fa-solid fa-bomb"></i>`;
                 //fermo il conteggio dei punti disabilitando tramite booleana funzione che aggiunge class clicked 
                 isOver = true;
+                if (isOver) gameOver(bombs)
+
             }
             //stabilisco principio di vincita
             if (clickCount === totalRowsCols - bombs.length) {
+                isOver = true;
+                if (isOver) gameOver(bombs)
+
 
                 console.log('congratulations! U WIN')
                 alert('Congratulations! U WIN');
-
             }
-        })
 
+
+        })
 
         //stampo gliglie nel loro contenitore
         gameArea.appendChild(cellElement);
+
     }
 })
